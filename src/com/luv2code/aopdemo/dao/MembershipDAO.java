@@ -9,4 +9,9 @@ public class MembershipDAO {
 		System.out.println(this.getClass() + "Doing My DB Work Here.");
 	}
 	
+	public boolean addSillyMember() {
+		System.out.println(this.getClass() + "Adding Silly Member");
+		return true;
+	}
+	
 }
