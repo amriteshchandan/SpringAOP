@@ -11,7 +11,12 @@ public class MainDemoApp {
 				new AnnotationConfigApplicationContext(DemoConfig.class);
 		
 		AccountDAO accountDAO = context.getBean("accountDAO", AccountDAO.class);
-		accountDAO.addAccount(new Account(), true, 1);
+		Account account = new Account();
+		account.setName("SBI");
+		account.setLevel("Txn Account");
+		System.out.println("\nCalling addAccount()");
+		accountDAO.addAccount(account, true, 1);
+		System.out.println("\nCalling doWork()");
 		accountDAO.doWork();
 		accountDAO.setName("amritesh");
 		accountDAO.setServiceCode("007");
