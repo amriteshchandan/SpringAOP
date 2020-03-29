@@ -43,9 +43,23 @@ public class MyDemoLoggingAspect {
 			returning = "result"
 			)
 	public void afterReturningFindAccountsAdvice(JoinPoint joinPoint, List<Account> result) {
+		
 		String method = joinPoint.getSignature().toShortString();
 		System.out.println("Executing @AfterReturning on :: " + method);
 		System.out.println("Returned Data :: " + result);
+		if (result.size() > 0) {
+			convertNameToUppercase(result);
+		}
+		System.out.println("Modified Returned Data :: " + result);
+		
+	}
+
+	private void convertNameToUppercase(List<Account> result) {
+		
+		for (Account account : result) {  
+			account.setName(account.getName().toUpperCase());
+		}
+		
 	}
 	
 }
