@@ -12,7 +12,7 @@ public class MyDemoLoggingAspect {
 	
 //	@Before(value = "execution(void add*())")
 	
-	@Before(value = "execution(* add*())")
+	@Before(value = "execution(* add*(com.luv2code.aopdemo.Account))")
 	public void beforeAddAccountAdvice() {
 		System.out.println("[MyDemoLoggingAspect] beforeAddAccountAdvice");
 	}
