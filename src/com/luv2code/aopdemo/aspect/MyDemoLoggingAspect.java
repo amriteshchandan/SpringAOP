@@ -19,4 +19,9 @@ public class MyDemoLoggingAspect {
 		System.out.println("[MyDemoLoggingAspect] beforeAddAccountAdvice");
 	}
 	
+	@Before("forDAOPackage()")
+	public void performAPIAnalyticsAdvice() {
+		System.out.println("[MyDemoLoggingAspect] performAPIAnalyticsAdvice");
+	}
+	
 }
