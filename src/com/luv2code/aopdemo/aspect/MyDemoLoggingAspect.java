@@ -1,6 +1,9 @@
 package com.luv2code.aopdemo.aspect;
 
+import java.util.List;
+
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -33,6 +36,16 @@ public class MyDemoLoggingAspect {
 				System.out.println("account level :: " + account.getLevel());
 			}
 		}
+	}
+	
+	@AfterReturning(
+			value = "execution(* com.luv2code.aopdemo.dao.AccountDAO.findAccounts(..))",
+			returning = "result"
+			)
+	public void afterReturningFindAccountsAdvice(JoinPoint joinPoint, List<Account> result) {
+		String method = joinPoint.getSignature().toShortString();
+		System.out.println("Executing @AfterReturning on :: " + method);
+		System.out.println("Returned Data :: " + result);
 	}
 	
 }
