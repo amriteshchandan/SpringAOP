@@ -11,4 +11,8 @@ public class AccountDAO {
 		System.out.println(this.getClass() + "Doing My DB Work Here.");
 	}
 	
+	public void doWork() {
+		System.out.println(this.getClass() + " :: doWork()");
+	}
+	
 }
