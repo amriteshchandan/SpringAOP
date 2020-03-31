@@ -98,7 +98,13 @@ public class MyDemoLoggingAspect {
 		logger.info("Executing @Around for method :: " + proceedingJoinPoint.getSignature().toShortString());
 		long start = System.currentTimeMillis();
 		logger.info("Proceeding to execute the method");
-		Object result = proceedingJoinPoint.proceed();
+		Object result = null; 
+		try {
+			result = proceedingJoinPoint.proceed();
+		} catch (Throwable e) {
+			logger.warning(e.getMessage());
+			result = "Major Accident - But you will be airlifted !!!";
+		}
 		logger.info("Method executed");
 		long end = System.currentTimeMillis();
 		long duration = end - start;

@@ -15,5 +15,13 @@ public class TrafficFortuneService {
 		}
 		return "Bad Traffic";
 	}
+
+	public String getFortune(boolean tripWire) {
+		
+		if (tripWire)
+			throw new RuntimeException("Major Accident !! - Lockdown!!!");
+		return this.getFortune();
+		
+	}
 	
 }

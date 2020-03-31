@@ -19,24 +19,10 @@ public class AroundDemoApp {
 				TrafficFortuneService.class);
 		
 		logger.info("Calling getFortune()");
-		String data = trafficFortuneService.getFortune();
+		boolean tripWire = true;
+		String data = trafficFortuneService.getFortune(tripWire);
 		logger.info("Fortune is :: "+ data);
 		logger.info("Finished");
-		
-		
-//		AccountDAO accountDAO = context.getBean("accountDAO", AccountDAO.class);
-//		List<Account> accounts = null;
-//		
-//		try {
-//			// add a boolean flag to simulate exceptions
-//			boolean tripWire = false;
-//			accounts = accountDAO.findAccounts(tripWire);
-//		} catch (Exception e) {
-//			logger.info("Exception in main program :: " + e);
-//		}
-//		
-//		
-//		logger.info("Accounts :: " + accounts);
 		
 		context.close();
 	}
