@@ -3,9 +3,11 @@ package com.luv2code.aopdemo.aspect;
 import java.util.List;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -73,15 +75,33 @@ public class MyDemoLoggingAspect {
 	public void afterThrowingFindAccountsAdvice(JoinPoint joinPoint, Throwable exception) {
 	
 		System.out.println("[MyDemoLoggingAspect] afterThrowingFindAccountsAdvice()");
-		System.out.println("Executing @@AfterThrowing for method :: " + joinPoint.getSignature().toShortString());
+		System.out.println("Executing @AfterThrowing for method :: " + joinPoint.getSignature().toShortString());
 		System.out.println("Exception :: " + exception);
 		
 	}
 	
 	@After("execution(* com.luv2code.aopdemo.dao.AccountDAO.findAccounts(..))")
 	public void afterFinallyFindAccountsAdvise(JoinPoint joinPoint) {
+		
 		System.out.println("[MyDemoLoggingAspect] afterFinallyFindAccountsAdvise()");
-		System.out.println("Executing @@AfterThrowing for method :: " + joinPoint.getSignature().toShortString());
+		System.out.println("Executing @After for method :: " + joinPoint.getSignature().toShortString());
+		
+	}
+	
+	@Around("execution(* com.luv2code.aopdemo.service.*.getFortune(..))")
+	public Object aroundAspect(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+		
+		System.out.println("[MyDemoLoggingAspect] aroundAspect()");
+		System.out.println("Executing @Around for method :: " + proceedingJoinPoint.getSignature().toShortString());
+		long start = System.currentTimeMillis();
+		System.out.println("Proceeding to execute the method");
+		Object result = proceedingJoinPoint.proceed();
+		System.out.println("Method executed");
+		long end = System.currentTimeMillis();
+		long duration = end - start;
+		System.out.println("Time Taken = " + (duration/1000) + " seconds.");
+		return result;
+		
 	}
 	
 }
