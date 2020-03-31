@@ -1,11 +1,15 @@
 package com.luv2code.aopdemo;
 
 
+import java.util.logging.Logger;
+
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.luv2code.aopdemo.service.TrafficFortuneService;
 
 public class AroundDemoApp {
+	
+	private static Logger logger = Logger.getLogger(AroundDemoApp.class.getName());
 	
 	public static void main(String[] args) {
 		AnnotationConfigApplicationContext context =
@@ -14,10 +18,10 @@ public class AroundDemoApp {
 		TrafficFortuneService trafficFortuneService = context.getBean("trafficFortuneService",
 				TrafficFortuneService.class);
 		
-		System.out.println("Calling getFortune()");
+		logger.info("Calling getFortune()");
 		String data = trafficFortuneService.getFortune();
-		System.out.println("Fortune is :: "+ data);
-		System.out.println("Finished");
+		logger.info("Fortune is :: "+ data);
+		logger.info("Finished");
 		
 		
 //		AccountDAO accountDAO = context.getBean("accountDAO", AccountDAO.class);
@@ -28,11 +32,11 @@ public class AroundDemoApp {
 //			boolean tripWire = false;
 //			accounts = accountDAO.findAccounts(tripWire);
 //		} catch (Exception e) {
-//			System.out.println("Exception in main program :: " + e);
+//			logger.info("Exception in main program :: " + e);
 //		}
 //		
 //		
-//		System.out.println("Accounts :: " + accounts);
+//		logger.info("Accounts :: " + accounts);
 		
 		context.close();
 	}

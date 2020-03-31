@@ -1,6 +1,7 @@
 package com.luv2code.aopdemo.aspect;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -21,23 +22,25 @@ import com.luv2code.aopdemo.Account;
 @Order(value = 2)
 public class MyDemoLoggingAspect {
 
+	private static Logger logger = Logger.getLogger(MyDemoLoggingAspect.class.getName());
+	
 	@Before(value = "com.luv2code.aopdemo.aspect.AOPAspectsPointCutExpression.forDAOPackageNoGettersAndSetters()")
 	public void beforeAddAccountAdvice(JoinPoint joinPoint) {
-		System.out.println("[MyDemoLoggingAspect] beforeAddAccountAdvice()");
+		logger.info("[MyDemoLoggingAspect] beforeAddAccountAdvice()");
 		
 		// Display method signature
 		MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-		System.out.println("methodSignature :: " + methodSignature);
+		logger.info("methodSignature :: " + methodSignature);
 		
 		// Display method arguments
 		Object[] args = joinPoint.getArgs();
 		
 		for (Object tempArg : args) {
-			System.out.println("Arg :: " + tempArg);
+			logger.info("Arg :: " + tempArg);
 			if (tempArg instanceof Account) {
 				Account account = (Account) tempArg;
-				System.out.println("account name :: " + account.getName());
-				System.out.println("account level :: " + account.getLevel());
+				logger.info("account name :: " + account.getName());
+				logger.info("account level :: " + account.getLevel());
 			}
 		}
 	}
@@ -48,14 +51,14 @@ public class MyDemoLoggingAspect {
 			)
 	public void afterReturningFindAccountsAdvice(JoinPoint joinPoint, List<Account> result) {
 		
-		System.out.println("[MyDemoLoggingAspect] afterReturningFindAccountsAdvice()");
+		logger.info("[MyDemoLoggingAspect] afterReturningFindAccountsAdvice()");
 		String method = joinPoint.getSignature().toShortString();
-		System.out.println("Executing @AfterReturning on :: " + method);
-		System.out.println("Returned Data :: " + result);
+		logger.info("Executing @AfterReturning on :: " + method);
+		logger.info("Returned Data :: " + result);
 		if (result.size() > 0) {
 			convertNameToUppercase(result);
 		}
-		System.out.println("Modified Returned Data :: " + result);
+		logger.info("Modified Returned Data :: " + result);
 		
 	}
 
@@ -74,32 +77,32 @@ public class MyDemoLoggingAspect {
 			)
 	public void afterThrowingFindAccountsAdvice(JoinPoint joinPoint, Throwable exception) {
 	
-		System.out.println("[MyDemoLoggingAspect] afterThrowingFindAccountsAdvice()");
-		System.out.println("Executing @AfterThrowing for method :: " + joinPoint.getSignature().toShortString());
-		System.out.println("Exception :: " + exception);
+		logger.info("[MyDemoLoggingAspect] afterThrowingFindAccountsAdvice()");
+		logger.info("Executing @AfterThrowing for method :: " + joinPoint.getSignature().toShortString());
+		logger.info("Exception :: " + exception);
 		
 	}
 	
 	@After("execution(* com.luv2code.aopdemo.dao.AccountDAO.findAccounts(..))")
 	public void afterFinallyFindAccountsAdvise(JoinPoint joinPoint) {
 		
-		System.out.println("[MyDemoLoggingAspect] afterFinallyFindAccountsAdvise()");
-		System.out.println("Executing @After for method :: " + joinPoint.getSignature().toShortString());
+		logger.info("[MyDemoLoggingAspect] afterFinallyFindAccountsAdvise()");
+		logger.info("Executing @After for method :: " + joinPoint.getSignature().toShortString());
 		
 	}
 	
 	@Around("execution(* com.luv2code.aopdemo.service.*.getFortune(..))")
 	public Object aroundAspect(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 		
-		System.out.println("[MyDemoLoggingAspect] aroundAspect()");
-		System.out.println("Executing @Around for method :: " + proceedingJoinPoint.getSignature().toShortString());
+		logger.info("[MyDemoLoggingAspect] aroundAspect()");
+		logger.info("Executing @Around for method :: " + proceedingJoinPoint.getSignature().toShortString());
 		long start = System.currentTimeMillis();
-		System.out.println("Proceeding to execute the method");
+		logger.info("Proceeding to execute the method");
 		Object result = proceedingJoinPoint.proceed();
-		System.out.println("Method executed");
+		logger.info("Method executed");
 		long end = System.currentTimeMillis();
 		long duration = end - start;
-		System.out.println("Time Taken = " + (duration/1000) + " seconds.");
+		logger.info("Time Taken = " + (duration/1000) + " seconds.");
 		return result;
 		
 	}
