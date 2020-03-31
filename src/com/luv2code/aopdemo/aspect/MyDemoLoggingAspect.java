@@ -103,7 +103,7 @@ public class MyDemoLoggingAspect {
 			result = proceedingJoinPoint.proceed();
 		} catch (Throwable e) {
 			logger.warning(e.getMessage());
-			result = "Major Accident - But you will be airlifted !!!";
+			throw e;
 		}
 		logger.info("Method executed");
 		long end = System.currentTimeMillis();
